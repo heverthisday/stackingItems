@@ -27,7 +27,7 @@ public class Lid  {
 
     }
     public void makeVisible(){}
-    public void makeInvisible{}
+    public void makeInvisible(){}
     public int getNumber() {
         return number;}
 

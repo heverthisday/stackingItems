@@ -33,7 +33,48 @@ public class Tower {
      * @param maxHeight altura maxima de la torre en cm
      */
     public Tower(int width, int maxHeight) {
-        //implementar
+        this.width = width;
+        this.maxHeight = maxHeight;
+        this.cups = new ArrayList<>();
+        this.lids = new ArrayList<>();
+        this.isVisible = false;
+        this.ok = true;
+        this.heightMarks = new ArrayList<>();
+
+        //inicializar canvas
+        canvas = Canvas.getCanvas();
+
+        createTowerFrame();
+
+        createHeightMarks();
+
+    }
+    /**
+     * Crea el marco visual de la torre
+     */
+    private void createTowerFrame() {
+        int frameWidth = width * BASE_WIDTH;
+        int frameHeight = maxHeight * PIXELS_PER_CM;
+
+        towerFrame = new Rectangle();
+        towerFrame.changeSize(frameHeight, frameWidth);
+        towerFrame.moveHorizontal(TOWER_MARGIN);
+        towerFrame.moveVertical(TOWER_MARGIN);
+        towerFrame.changeColor("white");
+    }
+
+    /**
+     * Crea las marcas de centímetros en la torre
+     */
+    private void createHeightMarks() {
+        for (int i = 0; i <= maxHeight; i++) {
+            Rectangle mark = new Rectangle();
+            mark.changeSize(2, 5);
+            mark.moveHorizontal(TOWER_MARGIN - 10);
+            mark.moveVertical(TOWER_MARGIN + (maxHeight - i) * PIXELS_PER_CM);
+            mark.changeColor("black");
+            heightMarks.add(mark);
+        }
     }
     //metodos de gestion de tazas (miniciclo dos)
     public void pushCup(int i){}
@@ -54,13 +95,58 @@ public class Tower {
     public int height(){return 0;}
     public int [] lidedCups(){return null;}
     public String [][] stackingItems(){return null;}
+    // MÉTODOS DE VISIBILIDAD (Mini-Ciclo 1)
+    public void makeVisible() {
+        if (!isVisible) {
+            canvas.setVisible(true);
+            towerFrame.makeVisible();
 
-    //metodos de visibilidad (minicilo 1)
-    public void makeVisible(){}
-    public void makeInvisible(){}
-    public void exit (){}
+            // Mostrar marcas de altura
+            for (Rectangle mark : heightMarks) {
+                mark.makeVisible();
+            }
 
-    //metodo de estado
+            // Mostrar todas las tazas
+            for (Cup cup : cups) {
+                cup.makeVisible();
+            }
+
+            // Mostrar todas las tapas
+            for (Lid lid : lids) {
+                lid.makeVisible();
+            }
+
+            isVisible = true;
+        }
+    }
+
+    public void makeInvisible() {
+        if (isVisible) {
+            towerFrame.makeInvisible();
+
+            // Ocultar marcas de altura
+            for (Rectangle mark : heightMarks) {
+                mark.makeInvisible();
+            }
+
+            // Ocultar todas las tazas
+            for (Cup cup : cups) {
+                cup.makeInvisible();
+            }
+
+            // Ocultar todas las tapas
+            for (Lid lid : lids) {
+                lid.makeInvisible();
+            }
+
+            isVisible = false;
+        }
+    }
+
+    public void exit() {
+        System.exit(0);
+    }
+
 
     public boolean ok() {
         return ok;

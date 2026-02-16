@@ -33,6 +33,6 @@ public class Cup {
     //metodos publicos
     public void makeVisible(){}
     public void makeInvisible(){}
-    public int getHeight() {return height}
+    public int getHeight() {return height;}
     public int getNumber(){return number;}
 }
